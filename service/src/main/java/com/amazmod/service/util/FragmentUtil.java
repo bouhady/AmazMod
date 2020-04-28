@@ -18,6 +18,7 @@ import com.google.gson.reflect.TypeToken;
 
 import org.tinylog.Logger;
 
+import java.io.File;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +50,6 @@ public class FragmentUtil {
         fontTitleSizeSP = getFontTitleSize();
 
         fontSizeSP = getFontSize();
-
 
         defaultLocale = getDefaultLocaleSettings();
     }
@@ -132,9 +132,26 @@ public class FragmentUtil {
         return defaultLocale;
     }
 
+    public void setFontLocale(TextView b) {
+        // Old code to change font based on locale:
+        if (defaultLocale.contains("iw") || defaultLocale.contains("ar")) {
+            Logger.debug("[Notification Fragment] Element font changed to Hebrew/Arabic.");
+            Typeface face = Typeface.createFromAsset(mContext.getAssets(), "fonts/DroidSansFallback.ttf");
+            b.setTypeface(face);
+        }
+    }
+
     public void setFontLocale(TextView b, String locale) {
-        //Logger.info("FragmentUtil setFontLocale Button: " + locale);
-        if (locale.contains("iw")) {
+        // Logger.debug("[Notification Fragment] Testing element characters.");
+
+        // Identify Hebrew language
+        //String unicode_iw_pattern = ".*[\u0590-\u05FF\uFB2A-\uFB4E].*"; // Hebrew character pattern (With precomposed characters)
+        //String unicode_ar_pattern = ".*[\u0600-\u06FF].*"; // Arabic character pattern
+        String unicode_iwar_pattern = ".*[\u0590-\u05FF\uFB2A-\uFB4E\u0600-\u06FF].*"; // Hebrew & Arabic characters pattern
+
+        // Identify Hebrew or Arabic characters
+        if(locale.matches(unicode_iwar_pattern)){
+            Logger.debug("[Notification Fragment] Element font changed to Hebrew/Arabic.");
             Typeface face = Typeface.createFromAsset(mContext.getAssets(), "fonts/DroidSansFallback.ttf");
             b.setTypeface(face);
         }

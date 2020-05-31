@@ -62,7 +62,7 @@
             <intent
                 app:iconSpaceReserved="false"
                 android:action="android.intent.action.VIEW"
-                android:targetClass="com.edotassi.amazmod.ui.NotificationPackagesSelectorActivity"
+                android:targetClass="com.edotassi.amazmod.ui.ApplicationSelectActivity"
                 android:targetPackage="com.edotassi.amazmod" />
         </DropDownPreference>
 

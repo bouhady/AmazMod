@@ -159,10 +159,18 @@ public class TweakingActivity extends BaseAppCompatActivity implements Transport
             }
         });
         boolean autoBrightness = (AmazModApplication.currentScreenBrightnessMode == Constants.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
-        autoBrightnessSwitch.setChecked(autoBrightness);
-        brightnessSeekbar.setEnabled(!autoBrightness);
-        brightnessEditText.setEnabled(!autoBrightness);
-        updateBrightnessButton.setEnabled(!autoBrightness);
+        if(Screen.isStratos3()) {
+            autoBrightnessSwitch.setChecked(false);
+            autoBrightnessSwitch.setEnabled(false);
+            brightnessSeekbar.setEnabled(true);
+            brightnessEditText.setEnabled(true);
+            updateBrightnessButton.setEnabled(true);
+        } else {
+            autoBrightnessSwitch.setChecked(autoBrightness);
+            brightnessSeekbar.setEnabled(!autoBrightness);
+            brightnessEditText.setEnabled(!autoBrightness);
+            updateBrightnessButton.setEnabled(!autoBrightness);
+        }
         brightnessSeekbar.setProgress(AmazModApplication.currentScreenBrightness);
 
         EventBus.getDefault().register(this);
@@ -302,7 +310,7 @@ public class TweakingActivity extends BaseAppCompatActivity implements Transport
                                 .enableLowPower()
                                 .continueWith(new Continuation<Void, Object>() {
                                     @Override
-                                    public Object then(@NonNull Task<Void> task) throws Exception {
+                                    public Object then(@NonNull Task<Void> task) {
                                         SnackProgressBar snackbar;
                                         if (task.isSuccessful()) {
                                             snackbar = new SnackProgressBar(SnackProgressBar.TYPE_CIRCULAR, getString(R.string.shell_command_sent));
@@ -343,7 +351,7 @@ public class TweakingActivity extends BaseAppCompatActivity implements Transport
                 .revokeAdminOwner()
                 .continueWith(new Continuation<Void, Object>() {
                     @Override
-                    public Object then(@NonNull Task<Void> task) throws Exception {
+                    public Object then(@NonNull Task<Void> task) {
                         SnackProgressBar snackbar;
                         if (task.isSuccessful()) {
                             snackbar = new SnackProgressBar(SnackProgressBar.TYPE_CIRCULAR, getString(R.string.shell_command_sent));
@@ -370,7 +378,7 @@ public class TweakingActivity extends BaseAppCompatActivity implements Transport
             View view = this.getCurrentFocus();
             if (view != null) {
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                if (imm != null) imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
         } catch (Exception ex) {
             Logger.error(ex);
@@ -420,7 +428,7 @@ public class TweakingActivity extends BaseAppCompatActivity implements Transport
 
         Watch.get().executeShellCommand(command, wait, false).continueWith(new Continuation<ResultShellCommand, Object>() {
             @Override
-            public Object then(@NonNull Task<ResultShellCommand> task) throws Exception {
+            public Object then(@NonNull Task<ResultShellCommand> task) {
 
                 snackProgressBarManager.dismissAll();
                 String snackBarText;
@@ -466,7 +474,7 @@ public class TweakingActivity extends BaseAppCompatActivity implements Transport
 
         Watch.get().setBrightness(brightnessData).continueWith(new Continuation<Void, Object>() {
             @Override
-            public Object then(@NonNull Task<Void> task) throws Exception {
+            public Object then(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     Snacky.builder()
                             .setActivity(TweakingActivity.this)
@@ -535,7 +543,7 @@ public class TweakingActivity extends BaseAppCompatActivity implements Transport
         }, cancellationTokenSource.getToken())
                 .continueWith(new Continuation<Void, Object>() {
                     @Override
-                    public Object then(@NonNull Task<Void> task) throws Exception {
+                    public Object then(@NonNull Task<Void> task) {
                         snackProgressBarManager.dismissAll();
                         if (task.isSuccessful()) {
                             SnackProgressBar snackbar = new SnackProgressBar(

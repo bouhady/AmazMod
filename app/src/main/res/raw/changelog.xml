@@ -1,8 +1,16 @@
 <changelog>
     <release
-        date="Unreleased"
-        versionCode="220"
-        versionName="v1.1.9 (220)">
+        date="2020-05-30"
+        versionCode="228"
+        versionName="v1.2.1">
+        <new>Better Stratos 3 compatibility</new>
+        <bugfix>Fixed screen on bug in service v1911</bugfix>
+    </release>
+
+    <release
+        date="2020-05-10"
+        versionCode="226"
+        versionName="v1.2">
         <new>Add search bar on settings menu</new>
         <new>Add "Support us" menu, your chance to show us some love!</new>
         <new>Add whitelist filter, and now any app can use different filter setting</new>
@@ -14,7 +22,8 @@
         <new>Watch's root status in main screen</new>
         <new>New location tracker in logs</new>
         <new>Hebrew and Arabic support on custom notification list</new>
-        <new>Stratos 3 support improvements (UI adjustments)</new>
+        <new>Stratos 3 support improvements (UI adjustments, updated transporter libs)</new>
+        <new>UI improvements (App notification menu)</new>new>
         <bugfix>Fix Notification delay with GreatFit based watchfaces</bugfix>
         <bugfix>Fixes for Notification counter</bugfix>
         <bugfix>Fix Custom UI Verge Sound Notification setting are lost</bugfix>

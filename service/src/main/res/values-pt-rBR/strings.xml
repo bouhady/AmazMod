@@ -15,6 +15,8 @@
     <string name="empty">Vazio</string>
     <string name="clear_data">Limpar Dados</string>
     <string name="uninstall">Desinstalar</string>
+    <string name="quick_launch">Início rápido</string>
+    <string name="quick_launch_description">O aplicativo pode ser executado a partir da tela usando o botão inferior (toque longo)!</string>
     <string name="clear_app_data">Limpar dados do app</string>
     <string name="install_app">Instalar App</string>
     <string name="delete">Excluir</string>
@@ -165,4 +167,9 @@
     <string name="activity_menu_input_method">Alterar Método de Entrada</string>
     <string name="activity_menu_device_info">Informações do dispositivo</string>
     <string name="activity_menu_hourly_chime">Toque de Hora</string>
+    <string name="uvindex_weakest">Weakest</string>
+    <string name="uvindex_weak">Weak</string>
+    <string name="uvindex_moderate">Moderate</string>
+    <string name="uvindex_strong">Strong</string>
+    <string name="uvindex_verystrong">Very strong</string>
 </resources>

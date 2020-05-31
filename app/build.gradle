@@ -4,7 +4,7 @@ apply plugin: 'io.fabric'
 apply plugin: 'com.jakewharton.butterknife'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-
+apply plugin: 'kotlin-kapt' // required for Kotlin
 
 android {
     compileSdkVersion 29
@@ -12,8 +12,8 @@ android {
         applicationId 'com.edotassi.amazmod'
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 225
-        versionName "1.1.10"
+        versionCode 228
+        versionName "1.2.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         if (branch == "dev") {
@@ -26,6 +26,11 @@ android {
     dataBinding {
         enabled = true
     }
+
+    signingConfigs {
+        release
+    }
+
     buildTypes {
         all {
             minifyEnabled false
@@ -33,6 +38,7 @@ android {
         }
         release {
             manifestPlaceholders = [enableCrashReporting: "true"]
+            signingConfig signingConfigs.release
         }
         debug {
             manifestPlaceholders = [enableCrashReporting: "false"]
@@ -45,7 +51,7 @@ android {
 
             def newApkName = ""
             def baseName = archivesBaseName
-            def buildType = variant.variantData.variantConfiguration.buildType.name
+            def buildType = variant.buildType.name
             def date = new Date();
             def formattedDate = date.format('YYYYMMddHHmm', TimeZone.getTimeZone('UTC'))
 
@@ -95,11 +101,13 @@ dependencies {
     implementation 'com.mikepenz:iconics-core:3.0.4@aar'
     implementation 'com.mikepenz:google-material-typeface:3.0.1.2.original@aar'
     implementation 'com.jakewharton:butterknife:10.1.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+    kapt 'com.jakewharton:butterknife-compiler:10.1.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
-    annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:4.2.4"
-    implementation 'com.github.Raizlabs.DBFlow:dbflow-core:4.2.4'
-    implementation 'com.github.Raizlabs.DBFlow:dbflow:4.2.4'
+    kapt "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
+    implementation "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
+    implementation "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
+    implementation "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
+    implementation "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:${dbflow_version}"
     implementation 'com.google.firebase:firebase-core:17.2.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.6'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
@@ -118,8 +126,9 @@ dependencies {
     implementation 'com.mindorks.android:prdownloader:0.4.0'
     implementation 'org.mnode.ical4j:ical4j:2.2.3'
     implementation 'org.slf4j:slf4j-simple:1.7.25'
-    implementation 'org.tinylog:tinylog-api:2.1.1'
-    implementation 'org.tinylog:tinylog-impl:2.1.1'
+    implementation "org.tinylog:tinylog-api:${tinylog_version}"
+    implementation "org.tinylog:tinylog-api-kotlin:${tinylog_version}"
+    implementation "org.tinylog:tinylog-impl:${tinylog_version}"
     implementation 'com.android.volley:volley:1.1.0'
     implementation 'commons-net:commons-net:3.6'
     implementation 'com.android.billingclient:billing:2.2.0'
@@ -140,4 +149,25 @@ configurations.all {
     }
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
     resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
+}
+
+
+def Properties props = new Properties()
+def propFile = new File('signing.properties')
+if (propFile.canRead()){
+    props.load(new FileInputStream(propFile))
+
+    if (props!=null && props.containsKey('STORE_FILE') && props.containsKey('STORE_PASSWORD') &&
+            props.containsKey('KEY_ALIAS') && props.containsKey('KEY_PASSWORD')) {
+        android.signingConfigs.release.storeFile = file(props['STORE_FILE'])
+        android.signingConfigs.release.storePassword = props['STORE_PASSWORD']
+        android.signingConfigs.release.keyAlias = props['KEY_ALIAS']
+        android.signingConfigs.release.keyPassword = props['KEY_PASSWORD']
+    } else {
+        println 'signing.properties found but some entries are missing'
+        android.buildTypes.release.signingConfig = null
+    }
+}else {
+    println 'signing.properties not found'
+    android.buildTypes.release.signingConfig = null
 }

@@ -158,6 +158,7 @@
     <string name="watch_is_connected">Connectée</string>
     <string name="watch_disconnected">Déconnectée</string>
     <string name="watch_connecting">Connection…</string>
+    <string name="watch_connecting_no_service">Connecting without service…</string>
     <string name="notifications_screen_timeout">Screen timeout</string>
     <string name="pref_notifications_inverted_theme">Thème clair</string>
     <string name="pref_notifications_inverted_theme_summary">Activer l\'arrière-plan clair avec le thème texte foncé.</string>
@@ -317,7 +318,7 @@
     <string name="pref_enable_delete_button_on">Le bouton supprimer sera affiché sous le contenu des notifications</string>
     <string name="pref_enable_delete_button_off">Le bouton Supprimer sera dans le 4ème écran en faisant glisser vers la gauche sur la notification</string>
     <string name="activity_packageoptions_unmute">Enlever la sourdine</string>
-    <string name="activity_packageoptions_muted_until">Son désactivé jusqu\'à:</string>
+    <string name="activity_packageoptions_muted_until">App is muted until:</string>
     <string name="main_options">Options principales</string>
     <string name="watchface_calendar_source">Sources du calendrier</string>
     <string name="test">Test</string>
@@ -376,7 +377,7 @@ suivre le thème système (bêta).</string>
     <string name="product_model">Modèle de produit</string>
     <string name="product_name">Nom du produit</string>
     <string name="serial_number">N° série</string>
-    <string name="build_id">Attribut de compilation</string>
+    <string name="build_id">Firmware</string>
     <string name="build_model">Modèle de compilation Huami</string>
     <string name="build_description">Description de la compilation</string>
     <string name="rename_folder">Renommer le dossier</string>
@@ -408,9 +409,9 @@ suivre le thème système (bêta).</string>
     <string name="batter_data_request">Demander de nouvelles données batterie</string>
     <string name="batter_data_export">Exporter les données batterie</string>
     <string name="app_options">Options de l\'App</string>
-    <string name="notification_options">Options des notifications</string>
-    <string name="notification_options_description">Ne pas afficher les notifications contenant les textes suivants (un par ligne) :</string>
-    <string name="whitelist_notification_options_description">Show only notifications containing the following texts (one per line):</string>
+    <string name="notification_options">App notification options</string>
+    <string name="notification_options_description">Do not show notifications containing the following texts:\n(write one per line)</string>
+    <string name="whitelist_notification_options_description">Show only notifications containing the following texts:\n(write one per line)</string>
     <string name="and">et</string>
     <plurals name="day">
         <item quantity="one">jour</item>
@@ -430,7 +431,8 @@ suivre le thème système (bêta).</string>
     <string name="no_widgets_found">Aucun widget trouvé</string>
     <string name="intro_description_grant_access">Accorder l\'accès</string>
     <string name="intro_description_get_started">Pour commencer</string>
-    <string name="filter_level">Niveau de filtre</string>
+    <string name="filter_mode">Filter mode:</string>
+    <string name="filter_level">Filter level:</string>
     <!-- Strings used for widget list start -->
     <string name="widget_step">Daily Overview (Steps)</string>
     <string name="widget_countdown">Compte à Rebours</string>

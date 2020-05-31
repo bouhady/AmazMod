@@ -15,6 +15,8 @@
     <string name="empty">Üres</string>
     <string name="clear_data">Adat törlés</string>
     <string name="uninstall">Eltávolítás</string>
+    <string name="quick_launch">Gyorsindítás</string>
+    <string name="quick_launch_description">Az alkalmazás elindítható a számlapról az alsó gomb segítségével (hosszan nyomva)!</string>
     <string name="clear_app_data">App adatok törlése</string>
     <string name="install_app">App telepítése</string>
     <string name="delete">Töröl</string>
@@ -165,4 +167,9 @@
     <string name="activity_menu_input_method">Beviteli mód váltás</string>
     <string name="activity_menu_device_info">Eszköz infó</string>
     <string name="activity_menu_hourly_chime">Óránként h.jelzés</string>
+    <string name="uvindex_weakest">Leggyengébb</string>
+    <string name="uvindex_weak">Gyenge</string>
+    <string name="uvindex_moderate">Mérsékelt</string>
+    <string name="uvindex_strong">Erős</string>
+    <string name="uvindex_verystrong">Nagyon erős</string>
 </resources>

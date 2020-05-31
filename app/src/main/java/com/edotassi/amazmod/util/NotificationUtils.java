@@ -285,28 +285,28 @@ public class NotificationUtils {
         String msg = "";
         if (localView != null) {
             Context context = localView.getContext();
-            TextView tv = (TextView) localView.findViewById(NotificationIds.getInstance(context).EMAIL_0);
+            TextView tv = localView.findViewById(NotificationIds.getInstance(context).EMAIL_0);
             if (tv != null && !TextUtils.isEmpty(tv.getText()))
                 msg += tv.getText().toString() + '\n';
-            tv = (TextView) localView.findViewById(NotificationIds.getInstance(context).EMAIL_1);
+            tv = localView.findViewById(NotificationIds.getInstance(context).EMAIL_1);
             if (tv != null && !TextUtils.isEmpty(tv.getText()))
                 msg += tv.getText().toString() + '\n';
-            tv = (TextView) localView.findViewById(NotificationIds.getInstance(context).EMAIL_2);
+            tv = localView.findViewById(NotificationIds.getInstance(context).EMAIL_2);
             if (tv != null && !TextUtils.isEmpty(tv.getText()))
                 msg += tv.getText().toString() + '\n';
-            tv = (TextView) localView.findViewById(NotificationIds.getInstance(context).EMAIL_3);
+            tv = localView.findViewById(NotificationIds.getInstance(context).EMAIL_3);
             if (tv != null && !TextUtils.isEmpty(tv.getText()))
                 msg += tv.getText().toString() + '\n';
-            tv = (TextView) localView.findViewById(NotificationIds.getInstance(context).EMAIL_4);
+            tv = localView.findViewById(NotificationIds.getInstance(context).EMAIL_4);
             if (tv != null && !TextUtils.isEmpty(tv.getText()))
                 msg += tv.getText().toString() + '\n';
-            tv = (TextView) localView.findViewById(NotificationIds.getInstance(context).EMAIL_5);
+            tv = localView.findViewById(NotificationIds.getInstance(context).EMAIL_5);
             if (tv != null && !TextUtils.isEmpty(tv.getText()))
                 msg += tv.getText().toString() + '\n';
-            tv = (TextView) localView.findViewById(NotificationIds.getInstance(context).EMAIL_6);
+            tv = localView.findViewById(NotificationIds.getInstance(context).EMAIL_6);
             if (tv != null && !TextUtils.isEmpty(tv.getText()))
                 msg += tv.getText().toString() + '\n';
-//        tv = (TextView) localView.findViewById(NotificationIds.getInstance().INBOX_MORE);
+//        tv = localView.findViewById(NotificationIds.getInstance().INBOX_MORE);
 //        if (tv != null && !TextUtils.isEmpty(tv.getText()))
 //            msg += tv.getText().toString() + '\n';
         }
@@ -440,21 +440,16 @@ public class NotificationUtils {
             View v;
             // try to get big text
             v = localView.findViewById(NotificationIds.getInstance(context).big_notification_content_text);
-            if (v != null && v instanceof TextView)
+            if (v instanceof TextView)
             {
                 String s = ((TextView)v).getText().toString();
                 if (!s.equals(""))
                 {
                     // add title string if available
                     View titleView = localView.findViewById(android.R.id.title);
-                    if (v != null && v instanceof TextView)
-                    {
-                        String title = ((TextView)titleView).getText().toString();
-                        if (!title.equals(""))
-                            text = title + " " + s;
-                        else
-                            text = s;
-                    }
+                    String title = ((TextView)titleView).getText().toString();
+                    if (!title.equals(""))
+                        text = title + " " + s;
                     else
                         text = s;
                 }
@@ -462,7 +457,7 @@ public class NotificationUtils {
 
             // try to extract details lines
             v = localView.findViewById(NotificationIds.getInstance(context).inbox_notification_event_10_id);
-            if (v != null && v instanceof TextView)
+            if (v instanceof TextView)
             {
                 CharSequence s = ((TextView)v).getText();
                 if (!s.equals(""))
@@ -471,7 +466,7 @@ public class NotificationUtils {
             }
 
             v = localView.findViewById(NotificationIds.getInstance(context).inbox_notification_event_9_id);
-            if (v != null && v instanceof TextView)
+            if (v instanceof TextView)
             {
                 CharSequence s = ((TextView)v).getText();
                 if (!s.equals(""))
@@ -479,7 +474,7 @@ public class NotificationUtils {
             }
 
             v = localView.findViewById(NotificationIds.getInstance(context).inbox_notification_event_8_id);
-            if (v != null && v instanceof TextView)
+            if (v instanceof TextView)
             {
                 CharSequence s = ((TextView)v).getText();
                 if (!s.equals(""))
@@ -487,7 +482,7 @@ public class NotificationUtils {
             }
 
             v = localView.findViewById(NotificationIds.getInstance(context).inbox_notification_event_7_id);
-            if (v != null && v instanceof TextView)
+            if (v instanceof TextView)
             {
                 CharSequence s = ((TextView)v).getText();
                 if (!s.equals(""))
@@ -495,7 +490,7 @@ public class NotificationUtils {
             }
 
             v = localView.findViewById(NotificationIds.getInstance(context).inbox_notification_event_6_id);
-            if (v != null && v instanceof TextView)
+            if (v instanceof TextView)
             {
                 CharSequence s = ((TextView)v).getText();
                 if (!s.equals(""))
@@ -503,7 +498,7 @@ public class NotificationUtils {
             }
 
             v = localView.findViewById(NotificationIds.getInstance(context).inbox_notification_event_5_id);
-            if (v != null && v instanceof TextView)
+            if (v instanceof TextView)
             {
                 CharSequence s = ((TextView)v).getText();
                 if (!s.equals(""))
@@ -511,7 +506,7 @@ public class NotificationUtils {
             }
 
             v = localView.findViewById(NotificationIds.getInstance(context).inbox_notification_event_4_id);
-            if (v != null && v instanceof TextView)
+            if (v instanceof TextView)
             {
                 CharSequence s = ((TextView)v).getText();
                 if (!s.equals(""))
@@ -519,7 +514,7 @@ public class NotificationUtils {
             }
 
             v = localView.findViewById(NotificationIds.getInstance(context).inbox_notification_event_3_id);
-            if (v != null && v instanceof TextView)
+            if (v instanceof TextView)
             {
                 CharSequence s = ((TextView)v).getText();
                 if (!s.equals(""))
@@ -527,7 +522,7 @@ public class NotificationUtils {
             }
 
             v = localView.findViewById(NotificationIds.getInstance(context).inbox_notification_event_2_id);
-            if (v != null && v instanceof TextView)
+            if (v instanceof TextView)
             {
                 CharSequence s = ((TextView)v).getText();
                 if (!s.equals(""))
@@ -535,7 +530,7 @@ public class NotificationUtils {
             }
 
             v = localView.findViewById(NotificationIds.getInstance(context).inbox_notification_event_1_id);
-            if (v != null && v instanceof TextView)
+            if (v instanceof TextView)
             {
                 CharSequence s = ((TextView)v).getText();
                 if (!s.equals(""))
@@ -563,7 +558,7 @@ public class NotificationUtils {
                 }
 
                 v = localView.findViewById(NotificationIds.getInstance(context).notification_subtext_id);
-                if (v != null && v instanceof TextView)
+                if (v instanceof TextView)
                 {
                     CharSequence s = ((TextView)v).getText();
                     if (!s.equals(""))

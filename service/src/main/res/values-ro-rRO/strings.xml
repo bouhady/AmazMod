@@ -15,6 +15,8 @@
     <string name="empty">Gol</string>
     <string name="clear_data">Ștergeți Datele</string>
     <string name="uninstall">Dezinstalează</string>
+    <string name="quick_launch">Lansare rapidă</string>
+    <string name="quick_launch_description">Aplicația poate fi lansată din ecranul watchface folosind butonul de jos (țineți apăsat lung)!</string>
     <string name="clear_app_data">Ștergeți Datele Aplicației</string>
     <string name="install_app">Instalează Aplicația</string>
     <string name="delete">Ştergeţi</string>
@@ -165,4 +167,9 @@
     <string name="activity_menu_input_method">Modificați Metoda de Introducere</string>
     <string name="activity_menu_device_info">Informații despre dispozitiv</string>
     <string name="activity_menu_hourly_chime">Clopot pe Oră</string>
+    <string name="uvindex_weakest">Weakest</string>
+    <string name="uvindex_weak">Weak</string>
+    <string name="uvindex_moderate">Moderate</string>
+    <string name="uvindex_strong">Strong</string>
+    <string name="uvindex_verystrong">Very strong</string>
 </resources>

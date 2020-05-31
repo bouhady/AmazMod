@@ -158,6 +158,7 @@
     <string name="watch_is_connected">Verbunden</string>
     <string name="watch_disconnected">Nicht mehr verbunden</string>
     <string name="watch_connecting">Am Verbinden…</string>
+    <string name="watch_connecting_no_service">Verbindung ohne Service…</string>
     <string name="notifications_screen_timeout">Bildschirm-Timeout</string>
     <string name="pref_notifications_inverted_theme">Helles Design</string>
     <string name="pref_notifications_inverted_theme_summary">Design mit hellem Hintergrund und dunklem Text aktivieren.</string>
@@ -317,7 +318,7 @@
     <string name="pref_enable_delete_button_on">Taste zum Löschen von Mitteilungen steht direkt unterhalb Mitteilungstext</string>
     <string name="pref_enable_delete_button_off">Löschtaste befindet sich im 4. Bildschirm wenn Sie in den Mitteilungen nach links wischen</string>
     <string name="activity_packageoptions_unmute">Stummschaltung aufheben</string>
-    <string name="activity_packageoptions_muted_until">Stummschaltung bis:</string>
+    <string name="activity_packageoptions_muted_until">App ist stummgeschaltet bis:</string>
     <string name="main_options">Hauptoptionen</string>
     <string name="watchface_calendar_source">Kalenderquelle</string>
     <string name="test">Test</string>
@@ -376,7 +377,7 @@ dem System-Theme (Beta) zu folgen.</string>
     <string name="product_model">Produktmodell</string>
     <string name="product_name">Produktbezeichnung</string>
     <string name="serial_number">Seriennummer</string>
-    <string name="build_id">Build-Nr</string>
+    <string name="build_id">Firmware</string>
     <string name="build_model">Huami-Modell erstellen</string>
     <string name="build_description">Beschreibung erstellen</string>
     <string name="rename_folder">Ordner umbenennen</string>
@@ -408,9 +409,9 @@ dem System-Theme (Beta) zu folgen.</string>
     <string name="batter_data_request">Aktuelle Akkudaten anfordern</string>
     <string name="batter_data_export">Akkudaten exportieren</string>
     <string name="app_options">App-Optionen</string>
-    <string name="notification_options">Benachrichtigungsoptionen</string>
-    <string name="notification_options_description">Keine Benachrichtigungen anzeigen, die folgende Texte enthalten (eine pro Zeile):</string>
-    <string name="whitelist_notification_options_description">Nur Benachrichtigungen anzeigen, die die folgenden Texte enthalten (eine pro Zeile):</string>
+    <string name="notification_options">App-Benachrichtigungsoptionen</string>
+    <string name="notification_options_description">Keine Benachrichtigungen anzeigen, die die folgenden Texte enthalten:\n(eine pro Zeile schreiben)</string>
+    <string name="whitelist_notification_options_description">Nur Benachrichtigungen anzeigen, die die folgenden Texte enthalten:\n(eine pro Zeile schreiben)</string>
     <string name="and">und</string>
     <plurals name="day">
         <item quantity="one">Tag</item>
@@ -430,7 +431,8 @@ dem System-Theme (Beta) zu folgen.</string>
     <string name="no_widgets_found">Keine Widgets gefunden</string>
     <string name="intro_description_grant_access">Zugriff gewähren</string>
     <string name="intro_description_get_started">Erste Schritte</string>
-    <string name="filter_level">Filterstufe</string>
+    <string name="filter_mode">Filtermodus:</string>
+    <string name="filter_level">Filter-Level:</string>
     <!-- Strings used for widget list start -->
     <string name="widget_step">Tagesübersicht (Schritte)</string>
     <string name="widget_countdown">Countdown</string>

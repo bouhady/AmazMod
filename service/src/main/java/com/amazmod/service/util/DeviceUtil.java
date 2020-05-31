@@ -59,12 +59,7 @@ public class DeviceUtil {
                 // If password is not set in the settings, the inKeyguardRestrictedInputMode() returns false,
                 // so we need to check if screen on for this case
                 PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-                    isLocked = !powerManager.isInteractive();
-                } else {
-                    //noinspection deprecation
-                    isLocked = !powerManager.isScreenOn();
-                }
+                isLocked = !powerManager.isInteractive();
             }
         } catch (NullPointerException e) {
             Logger.error(e, "iDeviceLocked exception: {}",  e.getMessage());
@@ -122,7 +117,8 @@ public class DeviceUtil {
         params.setAppPackageName(packageName);
         PackageInstaller.Session session = null;
 
-        new ExecCommand(ExecCommand.ADB, "adb shell settings put system screen_off_timeout 200000");
+        //new ExecCommand(ExecCommand.ADB, "adb shell settings put system screen_off_timeout 200000");
+        DeviceUtil.systemPutInt(context, Settings.System.SCREEN_OFF_TIMEOUT, 200000);
         Logger.debug("Set screen timeout to 3 min to install update");
         /*
         File su = new File("/system/xbin/su");
@@ -243,7 +239,6 @@ public class DeviceUtil {
         if(!apk.exists()){
             Logger.error("File not found!");
         } else {
-
             PackageReceiver.setIsAmazModInstall(true);
             final String installScript = copyScriptFile(context, "install_apk.sh").getAbsolutePath();
             final String busyboxPath = installBusybox(context);

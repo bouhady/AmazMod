@@ -15,6 +15,8 @@
     <string name="empty">Порожньо</string>
     <string name="clear_data">Очистити дані</string>
     <string name="uninstall">Видалити</string>
+    <string name="quick_launch">Швидкий запуск</string>
+    <string name="quick_launch_description">Додаток можна запустити з екрану годинника за допомогою нижньої кнопки (довге натискання)!</string>
     <string name="clear_app_data">Очистити дані додатків</string>
     <string name="install_app">Встановити додаток</string>
     <string name="delete">Видалити</string>
@@ -165,4 +167,9 @@
     <string name="activity_menu_input_method">Змінити метод введення</string>
     <string name="activity_menu_device_info">Інформація про пристрій</string>
     <string name="activity_menu_hourly_chime">Щогодинний сигнал</string>
+    <string name="uvindex_weakest">Найслабший</string>
+    <string name="uvindex_weak">Слабкий</string>
+    <string name="uvindex_moderate">Середній</string>
+    <string name="uvindex_strong">Сильний</string>
+    <string name="uvindex_verystrong">Найсильніший</string>
 </resources>

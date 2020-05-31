@@ -158,6 +158,7 @@
     <string name="watch_is_connected">متصل</string>
     <string name="watch_disconnected">قطع</string>
     <string name="watch_connecting">ربط…</string>
+    <string name="watch_connecting_no_service">Connecting without service…</string>
     <string name="notifications_screen_timeout">مهلة الشاشة</string>
     <string name="pref_notifications_inverted_theme">موضوع الضوء</string>
     <string name="pref_notifications_inverted_theme_summary">تمكين ضوء الخلفية الداكنة مع موضوع النص.</string>
@@ -317,7 +318,7 @@
     <string name="pref_enable_delete_button_on">حذف زر سوف يكون هو موضح أدناه محتوى الإشعارات</string>
     <string name="pref_enable_delete_button_off">حذف زر سوف يكون في 4 الشاشة عند الضرب اليسار على الإخطار</string>
     <string name="activity_packageoptions_unmute">إلغاء كتمه</string>
-    <string name="activity_packageoptions_muted_until">صامتة حتى:</string>
+    <string name="activity_packageoptions_muted_until">App is muted until:</string>
     <string name="main_options">الخيارات الرئيسية</string>
     <string name="watchface_calendar_source">التقويم المصدر</string>
     <string name="test">اختبار</string>
@@ -376,7 +377,7 @@
     <string name="product_model">نموذج المنتج</string>
     <string name="product_name">اسم المنتج</string>
     <string name="serial_number">المسلسل لا</string>
-    <string name="build_id">بناء عرض معرف</string>
+    <string name="build_id">Firmware</string>
     <string name="build_model">بناء نموذج Huami</string>
     <string name="build_description">بناء الوصف</string>
     <string name="rename_folder">إعادة تسمية المجلد</string>
@@ -408,9 +409,9 @@
     <string name="batter_data_request">طلب بطارية جديدة البيانات</string>
     <string name="batter_data_export">تصدير بيانات البطارية</string>
     <string name="app_options">خيارات التطبيق</string>
-    <string name="notification_options">خيارات الإعلام</string>
-    <string name="notification_options_description">لا تظهر الإخطارات التي تحتوي على النصوص التالية (واحد في كل سطر):</string>
-    <string name="whitelist_notification_options_description">Show only notifications containing the following texts (one per line):</string>
+    <string name="notification_options">App notification options</string>
+    <string name="notification_options_description">Do not show notifications containing the following texts:\n(write one per line)</string>
+    <string name="whitelist_notification_options_description">Show only notifications containing the following texts:\n(write one per line)</string>
     <string name="and">و</string>
     <plurals name="day">
         <item quantity="zero">أيام</item>
@@ -442,7 +443,8 @@
     <string name="no_widgets_found">أي الحاجيات وجدت</string>
     <string name="intro_description_grant_access">منح الوصول</string>
     <string name="intro_description_get_started">نبدأ</string>
-    <string name="filter_level">تصفية المستوى</string>
+    <string name="filter_mode">Filter mode:</string>
+    <string name="filter_level">Filter level:</string>
     <!-- Strings used for widget list start -->
     <string name="widget_step">نظرة عامة يومية (الخطوات)</string>
     <string name="widget_countdown">العد التنازلي</string>

@@ -158,6 +158,7 @@
     <string name="watch_is_connected">Połączono</string>
     <string name="watch_disconnected">Rozłączono</string>
     <string name="watch_connecting">Łączenie…</string>
+    <string name="watch_connecting_no_service">Connecting without service…</string>
     <string name="notifications_screen_timeout">Wygaszenie ekranu</string>
     <string name="pref_notifications_inverted_theme">Jasny motyw</string>
     <string name="pref_notifications_inverted_theme_summary">Włącz jasne tło przy ciemnym motywie tekstu.</string>
@@ -317,7 +318,7 @@
     <string name="pref_enable_delete_button_on">Przycisk skasuj wyświetli się poniżej powiadomień</string>
     <string name="pref_enable_delete_button_off">Przycisk skasuj jest na 4 ekranie kiedy przesuwasz powiadomienia</string>
     <string name="activity_packageoptions_unmute">Włącz dźwięk</string>
-    <string name="activity_packageoptions_muted_until">Wycisz do:</string>
+    <string name="activity_packageoptions_muted_until">Aplikacja jest wyciszona do:</string>
     <string name="main_options">Główne opcje</string>
     <string name="watchface_calendar_source">Źródło kalendarza</string>
     <string name="test">Test</string>
@@ -351,7 +352,7 @@
     <string name="pref_log_to_file_summary">Zapisz dzienniki AmazMod do amazmod.log</string>
     <string name="pref_log_to_file_level">Poziom dziennika</string>
     <string name="pref_log_to_file_level_summary">Ustaw poziom detali jaki ma być przechowywany w dzienniku.</string>
-    <string name="location_tracker">Location Tracker</string>
+    <string name="location_tracker">Śledzenie lokalizacji</string>
     <string name="notification_low_battery">Amazfit ma słaba baterię</string>
     <string name="notification_low_battery_description">Bateria zegarka spadła poniżej %s</string>
     <string name="notification_watch_charged">Amazfit jest naładowany</string>
@@ -375,7 +376,7 @@
     <string name="product_model">Produkt model</string>
     <string name="product_name">Nazwa produktu</string>
     <string name="serial_number">Nr seryjny</string>
-    <string name="build_id">Utwórz identyfikator wyświetlacza</string>
+    <string name="build_id">Firmware</string>
     <string name="build_model">Build model Huami</string>
     <string name="build_description">Opis kompilacji</string>
     <string name="rename_folder">Zmień nazwę Folderu</string>
@@ -408,8 +409,8 @@
     <string name="batter_data_export">Eksport danych baterii</string>
     <string name="app_options">Ustawienia aplikacji</string>
     <string name="notification_options">Opcje powiadomień</string>
-    <string name="notification_options_description">Nie wyświetlaj powiadomień zawierających tekst (jeden w linii):</string>
-    <string name="whitelist_notification_options_description">Pokaż tylko powiadomienia zawierające następujące wyrazy (po jednym w wierszu):</string>
+    <string name="notification_options_description">Do not show notifications containing the following texts:\n(write one per line)</string>
+    <string name="whitelist_notification_options_description">Show only notifications containing the following texts:\n(write one per line)</string>
     <string name="and">oraz</string>
     <plurals name="day">
         <item quantity="one">dzień</item>
@@ -435,7 +436,8 @@
     <string name="no_widgets_found">Nie znaleziono widżetów</string>
     <string name="intro_description_grant_access">Grant Access</string>
     <string name="intro_description_get_started">Get Started</string>
-    <string name="filter_level">Poziom filtrów</string>
+    <string name="filter_mode">Filter mode:</string>
+    <string name="filter_level">Filter level:</string>
     <!-- Strings used for widget list start -->
     <string name="widget_step">Dzienny przegląd (Kroki)</string>
     <string name="widget_countdown">Minutnik</string>

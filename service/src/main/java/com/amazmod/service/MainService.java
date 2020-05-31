@@ -1,7 +1,5 @@
 package com.amazmod.service;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.app.admin.DevicePolicyManager;
 import android.app.job.JobInfo;
@@ -13,9 +11,6 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -23,7 +18,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
@@ -33,7 +27,6 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.collection.ArrayMap;
-import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.amazmod.service.db.model.BatteryDbEntity;
@@ -61,7 +54,6 @@ import com.amazmod.service.events.incoming.Watchface;
 import com.amazmod.service.music.MusicControlInputListener;
 import com.amazmod.service.notifications.NotificationService;
 import com.amazmod.service.receiver.AdminReceiver;
-import com.amazmod.service.receiver.AlarmReceiver;
 import com.amazmod.service.receiver.NotificationReplyReceiver;
 import com.amazmod.service.settings.SettingsManager;
 import com.amazmod.service.springboard.WidgetSettings;
@@ -100,7 +92,6 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.RandomAccessFile;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -133,6 +124,7 @@ import static amazmod.com.transport.Constants.WIDGETS_LIST_EMPTY_CODE;
 import static amazmod.com.transport.Constants.WIDGETS_LIST_SAVED_CODE;
 import static com.amazmod.service.util.DeviceUtil.getLocalIpAddress;
 import static com.amazmod.service.util.FileDataFactory.drawableToBitmap;
+import static com.amazmod.service.util.SystemProperties.isStratos3;
 
 /**
  * Created by edoardotassinari on 04/04/18.
@@ -245,7 +237,8 @@ public class MainService extends Service implements Transporter.DataListener {
         settings = new WidgetSettings(Constants.TAG, context);
 
         // Restore system screen_off setting in case there was a service update
-        new ExecCommand(ExecCommand.ADB, "adb shell settings put system screen_off_timeout 14000");
+        //new ExecCommand(ExecCommand.ADB, "adb shell settings put system screen_off_timeout 14000");
+        DeviceUtil.systemPutInt(context, Settings.System.SCREEN_OFF_TIMEOUT, 14000);
         Logger.debug("Restore APK_INSTALL screen timeout");
 
         /*
@@ -547,7 +540,7 @@ public class MainService extends Service implements Transporter.DataListener {
         if (key != null) {
             if (NotificationStore.getCustomNotificationCount() > 0)
                 for (ArrayMap.Entry<String, String> pair : NotificationStore.keyMap.entrySet()) {
-                    Logger.warn("deleteNotification NS.key: {} \\ NS.entry: {}", pair.getKey(), pair.getValue());
+                    //Logger.warn("deleteNotification NS.key: {} \\ NS.entry: {}", pair.getKey(), pair.getValue());
 
                     if (key.equals(pair.getValue())) {
                         Logger.warn("deleteNotification removing: {}", pair.getKey());
@@ -950,18 +943,19 @@ public class MainService extends Service implements Transporter.DataListener {
         // Get watch info
         watchStatusData.setAmazModServiceVersion(BuildConfig.VERSION_NAME);
         //watchStatusData.setRoBuildDate(SystemProperties.get(WatchStatusData.RO_BUILD_DATE, "-"));
-        watchStatusData.setRoBuildDescription(SystemProperties.get(WatchStatusData.RO_BUILD_DESCRIPTION, "-"));
-        watchStatusData.setRoBuildDisplayId(SystemProperties.get(WatchStatusData.RO_BUILD_DISPLAY_ID, "-"));
-        watchStatusData.setRoBuildHuamiModel(SystemProperties.get(WatchStatusData.RO_BUILD_HUAMI_MODEL, "-"));
         //watchStatusData.setRoBuildHuamiNumber(SystemProperties.get(WatchStatusData.RO_BUILD_HUAMI_NUMBER, "-"));
         //watchStatusData.setRoProductDevice(SystemProperties.get(WatchStatusData.RO_PRODUCT_DEVICE, "-"));
         //watchStatusData.setRoProductManufacter(SystemProperties.get(WatchStatusData.RO_PRODUCT_MANUFACTER, "-"));
-        watchStatusData.setRoProductModel(SystemProperties.get(WatchStatusData.RO_PRODUCT_MODEL, "-"));
-        watchStatusData.setRoProductName(SystemProperties.get(WatchStatusData.RO_PRODUCT_NAME, "-"));
         //watchStatusData.setRoRevision(SystemProperties.get(WatchStatusData.RO_REVISION, "-"));
-        watchStatusData.setRoSerialno(SystemProperties.get(WatchStatusData.RO_SERIALNO, "-"));
         //watchStatusData.setRoBuildFingerprint(SystemProperties.get(WatchStatusData.RO_BUILD_FINGERPRINT, "-"));
-
+        watchStatusData.setRoSerialno(SystemProperties.get(WatchStatusData.RO_SERIALNO, "-"));
+        watchStatusData.setRoBuildDisplayId(SystemProperties.get(WatchStatusData.RO_BUILD_DISPLAY_ID, "-"));
+        if (!isStratos3()) { // todo reduce data until we fix Stratos 3 connection
+            watchStatusData.setRoBuildHuamiModel(SystemProperties.get(WatchStatusData.RO_BUILD_HUAMI_MODEL, "-"));
+            //watchStatusData.setRoBuildDescription(SystemProperties.get(WatchStatusData.RO_BUILD_DESCRIPTION, "-"));
+            watchStatusData.setRoProductModel(SystemProperties.get(WatchStatusData.RO_PRODUCT_MODEL, "-"));
+            watchStatusData.setRoProductName(SystemProperties.get(WatchStatusData.RO_PRODUCT_NAME, "-"));
+        }
         // Get brightness
         int b = 0;
         int bm = Constants.SCREEN_BRIGHTNESS_MODE_AUTOMATIC;
@@ -975,37 +969,42 @@ public class MainService extends Service implements Transporter.DataListener {
         watchStatusData.setScreenBrightnessMode(bm);
 
         // Check if rooted
-        watchStatusData.setRooted((new File("/system/xbin/su").exists())?1:0);
+        if( new File("/system/xbin/su").exists() )
+            watchStatusData.setRooted(1);
 
         // Get last heart rates
         final boolean isHeartrateData = settingsManager.getBoolean(Constants.PREF_HEARTRATE_DATA, true);
         if (isHeartrateData) {
             Cursor cur = null;
-            String heartrates = "";
+            String heartRates = "";
             try {
                 cur = getContentResolver().query(Uri.parse("content://com.huami.watch.health.heartdata"), null, null, null, "utc_time ASC");
                 // Use the cursor to step through the returned records
-                while (cur.moveToNext()) {
+                while (cur != null && cur.moveToNext()) {
                     // Get the field values
                     // example: utc_time=1528485660, time_zone=0, heart_rate=96
-                    long utc_time = cur.getLong(0);
+                    long utc_time;
+                    utc_time = (cur.getLong(0)) * (isStratos3()?1000:1);
                     //int time_zone = cur.getInt(1);
                     int heart_rate = cur.getInt(2);
 
-                    heartrates += utc_time + "," + heart_rate + ",";
+                    heartRates += utc_time + "," + heart_rate + ",";
                 }
-                cur.close();
+                if(cur != null) cur.close();
             } catch (SecurityException e) {
                 //Getting data error
             }
-            watchStatusData.setLastHeartRates(heartrates);
+
+            if(!heartRates.equals("")) // send only if there are data
+                watchStatusData.setLastHeartRates(heartRates);
         }
 
         // Get hourly chime status
         settings.reload();
         boolean isHourlyChime = settings.get(Constants.PREF_AMAZMOD_HOURLY_CHIME, false);
         Logger.debug("Sync hourly chime to transport : " + isHourlyChime);
-        watchStatusData.setHourlyChime(isHourlyChime?1:0); // 1 = on, 0 = off
+        if(isHourlyChime) // send only if there are data
+            watchStatusData.setHourlyChime(1); // 1 = on, 0 = off
 
         // Send transmit
         Logger.debug("MainService requestWatchStatus watchStatusData: " + watchStatusData.toString());
@@ -1218,8 +1217,8 @@ public class MainService extends Service implements Transporter.DataListener {
                             if (apk.exists()) {
                                 if (apkFile.contains("service-")) {
                                     showConfirmationWearActivity(getString(R.string.service_update), "0");
-                                    //DeviceUtil.systemPutAdb(context,"screen_off_timeout", "200000");
-                                    new ExecCommand("adb shell settings put system screen_off_timeout 200000");
+                                    //new ExecCommand("adb shell settings put system screen_off_timeout 200000");
+                                    DeviceUtil.systemPutInt(context, Settings.System.SCREEN_OFF_TIMEOUT, 200000);
                                     Thread.sleep(1000);
                                     new ExecCommand("adb install -r -d " + apkFile);
 

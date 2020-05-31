@@ -15,6 +15,8 @@
     <string name="empty">ว่าง</string>
     <string name="clear_data">ล้างข้อมูล</string>
     <string name="uninstall">ถอนการติดตั้ง</string>
+    <string name="quick_launch">Quick Launch</string>
+    <string name="quick_launch_description">App can be launched from watchface screen using bottom button (long press)!</string>
     <string name="clear_app_data">ล้างข้อมูล</string>
     <string name="install_app">ติดตั้งแอพ</string>
     <string name="delete">ลบ</string>
@@ -165,4 +167,9 @@
     <string name="activity_menu_input_method">เปลี่ยนวิธีการนำเข้าข้อมูล</string>
     <string name="activity_menu_device_info">ข้อมูลอุปกรณ์</string>
     <string name="activity_menu_hourly_chime">ทุกชั่วโมง Event Recurs By Days ฆังที่</string>
+    <string name="uvindex_weakest">Weakest</string>
+    <string name="uvindex_weak">Weak</string>
+    <string name="uvindex_moderate">Moderate</string>
+    <string name="uvindex_strong">Strong</string>
+    <string name="uvindex_verystrong">Very strong</string>
 </resources>

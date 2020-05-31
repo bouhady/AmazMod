@@ -15,6 +15,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.os.StatFs;
+import android.provider.Settings;
 import android.support.wearable.view.WearableListView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +41,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Stack;
 import java.util.concurrent.Callable;
@@ -224,7 +224,7 @@ public class WearFilesFragment extends Fragment {
 
         Flowable.fromCallable(new Callable<List<AppInfo>>() {
             @Override
-            public List<AppInfo> call() throws Exception {
+            public List<AppInfo> call() {
                 Logger.info( "WearFilesFragment loadFiles call");
 
                 List<AppInfo> appInfoList = getFilesList(file);
@@ -237,7 +237,7 @@ public class WearFilesFragment extends Fragment {
                 .observeOn(Schedulers.single())
                 .subscribe(new Consumer<List<AppInfo>>() {
                     @Override
-                    public void accept(final List<AppInfo> appInfoList) throws Exception {
+                    public void accept(final List<AppInfo> appInfoList) {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -251,7 +251,7 @@ public class WearFilesFragment extends Fragment {
 
                                 listView.post(new Runnable() {
                                     public void run() {
-                                        Logger.debug( "WearFilesFragment loadFiles scrollToTop");
+                                        Logger.debug("WearFilesFragment loadFiles scrollToTop");
                                         listView.smoothScrollToPosition(0);
                                     }
                                 });
@@ -259,6 +259,8 @@ public class WearFilesFragment extends Fragment {
                             }
                         });
                     }
+                }, throwable -> {
+                        Logger.error("WearFilesFragment: Flowable: subscribeOn: " + throwable.getMessage());
                 });
 
     }
@@ -513,8 +515,8 @@ public class WearFilesFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         showToast(getString(R.string.please_wait_installation));
                         if (file.toString().contains("service-")) {
-                            //DeviceUtil.systemPutAdb(mContext,"screen_off_timeout", "200000");
-                            new ExecCommand("adb shell settings put system screen_off_timeout 200000");
+                            //new ExecCommand("adb shell settings put system screen_off_timeout 200000");
+                            DeviceUtil.systemPutInt(mContext, Settings.System.SCREEN_OFF_TIMEOUT, 200000);
                             sleep(1000);
                             new ExecCommand("adb install -r " + file.getAbsolutePath());
                         } else {

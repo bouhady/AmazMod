@@ -15,6 +15,8 @@
     <string name="empty">Leer</string>
     <string name="clear_data">Daten löschen</string>
     <string name="uninstall">Deinstallieren</string>
+    <string name="quick_launch">Schnellstart</string>
+    <string name="quick_launch_description">Die App kann über die untere Taste (langes Drücken) vom Bildschirm aus gestartet werden!</string>
     <string name="clear_app_data">App-Daten löschen</string>
     <string name="install_app">App installieren</string>
     <string name="delete">Löschen</string>
@@ -165,4 +167,9 @@
     <string name="activity_menu_input_method">Eingabemethode ändern</string>
     <string name="activity_menu_device_info">Geräteinfo</string>
     <string name="activity_menu_hourly_chime">Stündlicher Klingelton</string>
+    <string name="uvindex_weakest">Sehr schwach</string>
+    <string name="uvindex_weak">Schwach</string>
+    <string name="uvindex_moderate">Mäßig</string>
+    <string name="uvindex_strong">Stark</string>
+    <string name="uvindex_verystrong">Sehr stark</string>
 </resources>

@@ -158,6 +158,7 @@
     <string name="watch_is_connected">З\'єднано</string>
     <string name="watch_disconnected">Роз\'єднано</string>
     <string name="watch_connecting">З\'єднання…</string>
+    <string name="watch_connecting_no_service">Підключення без сервісу…</string>
     <string name="notifications_screen_timeout">Тайм-аут екрану</string>
     <string name="pref_notifications_inverted_theme">Світла тема</string>
     <string name="pref_notifications_inverted_theme_summary">Увімкнути тему зі світлим фоном і темним текстом.</string>
@@ -317,7 +318,7 @@
     <string name="pref_enable_delete_button_on">Кнопка видалення буде показана під змістом сповіщення</string>
     <string name="pref_enable_delete_button_off">Кнопка видалення буде на четвертому екрані, коли проводите вліво від сповіщення</string>
     <string name="activity_packageoptions_unmute">Увімкнути звук</string>
-    <string name="activity_packageoptions_muted_until">Тиша до:</string>
+    <string name="activity_packageoptions_muted_until">Сповіщення додатку вимкнені до:</string>
     <string name="main_options">Основні налаштування</string>
     <string name="watchface_calendar_source">Джерело календаря</string>
     <string name="test">Тест</string>
@@ -375,7 +376,7 @@
     <string name="product_model">Модель</string>
     <string name="product_name">Назва</string>
     <string name="serial_number">Серійний номер</string>
-    <string name="build_id">Номер збірки</string>
+    <string name="build_id">Прошивка</string>
     <string name="build_model">Модель пристрою Huami</string>
     <string name="build_description">Опис збірки</string>
     <string name="rename_folder">Змінити назву теки</string>
@@ -407,9 +408,9 @@
     <string name="batter_data_request">Запит нових даних батареї</string>
     <string name="batter_data_export">Експорт даних батареї</string>
     <string name="app_options">Опції додатку</string>
-    <string name="notification_options">Опції сповіщень</string>
-    <string name="notification_options_description">Не показувати сповіщення, що містять наступний текст (один на рядок):</string>
-    <string name="whitelist_notification_options_description">Показувати лише сповіщення, що містять наступний текст (один на рядок):</string>
+    <string name="notification_options">Параметри сповіщень додатку</string>
+    <string name="notification_options_description">Не показувати сповіщення, що містять наступний текст:\n(один на рядок)</string>
+    <string name="whitelist_notification_options_description">Показувати лише сповіщення, що містять наступний текст:\n(один на рядок)</string>
     <string name="and">та</string>
     <plurals name="day">
         <item quantity="one">день</item>
@@ -435,7 +436,8 @@
     <string name="no_widgets_found">Віджетів не знайдено</string>
     <string name="intro_description_grant_access">Надати доступ</string>
     <string name="intro_description_get_started">Розпочати</string>
-    <string name="filter_level">Рівень фільтрації</string>
+    <string name="filter_mode">Режим фільтру:</string>
+    <string name="filter_level">Рівень фільтрації:</string>
     <!-- Strings used for widget list start -->
     <string name="widget_step">Щоденний Огляд (Кроки)</string>
     <string name="widget_countdown">Зворотній відлік</string>

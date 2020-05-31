@@ -18,10 +18,13 @@ import com.edotassi.amazmod.R;
 import com.edotassi.amazmod.db.model.BatteryStatusEntity;
 import com.edotassi.amazmod.db.model.BatteryStatusEntity_Table;
 import com.edotassi.amazmod.event.BatteryStatus;
+import com.edotassi.amazmod.event.OtherData;
+import com.edotassi.amazmod.transport.TransportService;
 import com.edotassi.amazmod.ui.MainActivity;
 import com.edotassi.amazmod.watch.Watch;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.Task;
+import com.huami.watch.transport.DataBundle;
 import com.pixplicity.easyprefs.library.Prefs;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
@@ -30,6 +33,8 @@ import org.tinylog.Logger;
 
 import amazmod.com.transport.Constants;
 import amazmod.com.transport.data.BatteryData;
+
+import static amazmod.com.transport.Transport.OFFICIAL_SYNC_BATTERY;
 
 public class BatteryStatusReceiver extends BroadcastReceiver {
 
@@ -43,14 +48,14 @@ public class BatteryStatusReceiver extends BroadcastReceiver {
         Logger.trace("BatteryStatusReceiver onReceive action: {}", action);
 
         if (action == null) {
-
-            if (!Watch.isInitialized()) {
+            if (!Watch.isInitialized())
                 Watch.init(context);
-            }
 
+            // Send battery request and wait for answer (request to Amazmod service)
+            /*
             Watch.get().getBatteryStatus().continueWith(new Continuation<BatteryStatus, Object>() {
                 @Override
-                public Object then(@NonNull Task<BatteryStatus> task) throws Exception {
+                public Object then(@NonNull Task<BatteryStatus> task) {
                     Logger.trace("BatteryStatusReceiver onReceive getBatteryStatus");
                     if (task.isSuccessful()) {
                         BatteryStatus batteryStatus = task.getResult();
@@ -61,6 +66,42 @@ public class BatteryStatusReceiver extends BroadcastReceiver {
                             Logger.error("null batteryStatus!");
                     } else {
                         Logger.error(task.getException(), "failed reading battery status");
+                    }
+                    return null;
+                }
+            });*/
+
+
+            // Send battery request and wait for answer (official API)
+            Watch.get().sendSimpleData(OFFICIAL_SYNC_BATTERY, OFFICIAL_SYNC_BATTERY, TransportService.TRANSPORT_COMPANION).continueWith(new Continuation<OtherData, Object>() {
+                @Override
+                public Object then(@NonNull Task<OtherData> task) {
+                    if (task.isSuccessful()) {
+                        // Successful reply from official API
+                        OtherData returnedData = task.getResult();
+                        if (returnedData == null)
+                            throw new NullPointerException("Returned data are null");
+
+                        // Convert official data to Amazmod data
+                        DataBundle otherData = returnedData.getOtherData();
+                        BatteryData batteryData = new BatteryData();
+                        batteryData.setLevel( otherData.getInt("BatteryLevel")/100f );
+                        batteryData.setCharging( otherData.getBoolean("BatteryIsCharging") );
+                        batteryData.setUsbCharge(false);
+                        batteryData.setAcCharge(false);
+                        if (otherData.getInt("BatteryLevel") > 98)
+                            batteryData.setDateLastCharge(otherData.getLong("ChargingTime", Long.MIN_VALUE));
+                        else
+                            batteryData.setDateLastCharge(0);
+
+                        //otherData.getInt("ChargingIntervalDays", -1)
+
+                        BatteryStatus batteryStatus = new BatteryStatus( batteryData.toDataBundle() );
+
+                        updateBattery( batteryStatus );
+                        batteryAlert(batteryStatus, context);
+                    }else{
+                        Logger.debug("Could not get official battery info");
                     }
                     return null;
                 }
@@ -84,14 +125,14 @@ public class BatteryStatusReceiver extends BroadcastReceiver {
         if (isEnabled) {
             Logger.trace("BatteryStatusReceiver enabling receiver");
 
-            int syncInterval = Integer.valueOf(Prefs.getString(Constants.PREF_BATTERY_BACKGROUND_SYNC_INTERVAL, "60"));
+            int syncInterval = Integer.parseInt(Prefs.getString(Constants.PREF_BATTERY_BACKGROUND_SYNC_INTERVAL, "60"));
             AmazModApplication.timeLastSync = Prefs.getLong(Constants.PREF_TIME_LAST_SYNC, 0L);
 
             long delay = ((long) syncInterval * 60000L) - SystemClock.elapsedRealtime() - AmazModApplication.timeLastSync;
 
             Logger.info("BatteryStatusReceiver times: " + SystemClock.elapsedRealtime() + " / " + AmazModApplication.timeLastSync);
 
-            if (delay < 0) delay = 0;
+            if (delay < 60000) delay = 60000; // 1 min delay because it may be triggered when you open the app
 
             try {
                 if (alarmManager != null)
@@ -109,10 +150,10 @@ public class BatteryStatusReceiver extends BroadcastReceiver {
     }
 
     private void updateBattery(BatteryStatus batteryStatus) {
-        Logger.trace("BatteryStatusReceiver updateBattery");
+        //Logger.trace("BatteryStatusReceiver updateBattery");
 
         BatteryData batteryData = batteryStatus.getBatteryData();
-        Logger.debug("level: {} | charging: {} | usb: {} | ac: {} | dataLastCharge: {}",
+        Logger.debug("[Battery] Incoming battery data: [level: {}, charging: {}, usb: {}, ac: {}, dataLastCharge: {}]",
                 batteryData.getLevel(), batteryData.isCharging(), batteryData.isUsbCharge(), batteryData.isAcCharge(), batteryData.getDateLastCharge());
 
         long date = System.currentTimeMillis();
@@ -126,6 +167,7 @@ public class BatteryStatusReceiver extends BroadcastReceiver {
 
         //Logger.debug("TransportService batteryStatus: " + batteryStatus.toString());
 
+        // Save data
         try {
             BatteryStatusEntity storeBatteryStatusEntity = SQLite
                     .select()
@@ -133,19 +175,19 @@ public class BatteryStatusReceiver extends BroadcastReceiver {
                     .where(BatteryStatusEntity_Table.date.is(date))
                     .querySingle();
 
-            if (storeBatteryStatusEntity == null) {
+            if (storeBatteryStatusEntity == null)
                 FlowManager.getModelAdapter(BatteryStatusEntity.class).insert(batteryStatusEntity);
-            }
+
         } catch (Exception ex) {
             //TODO add crashlitics
-            Logger.error(ex, "TransportService batteryStatus exception: {}", ex.getMessage());
+            Logger.error(ex, "[Battery] Crash while storing data, exception: {}", ex.getMessage());
         }
         // Save time of last sync
         Prefs.putLong(Constants.PREF_TIME_LAST_SYNC, SystemClock.elapsedRealtime());
     }
 
     private void batteryAlert(BatteryStatus batteryStatus, Context context) {
-        Logger.trace("BatteryStatusReceiver batteryAlert");
+        //Logger.trace("BatteryStatusReceiver batteryAlert");
         // User options/data
         int watchBatteryAlert = Integer.parseInt(Prefs.getString(Constants.PREF_BATTERY_WATCH_ALERT,
                 Constants.PREF_DEFAULT_BATTERY_WATCH_ALERT));
@@ -159,11 +201,11 @@ public class BatteryStatusReceiver extends BroadcastReceiver {
         int battery = Math.round(batteryData.getLevel()*100);
         boolean charging = batteryData.isCharging();
 
-        Logger.debug("Battery check watch - level: {}% | charging: {} | limit: {}%", battery, charging, watchBatteryAlert);
+        Logger.debug("[Battery Alert] Check watch battery: [level: {}%, charging: {}, limit: {}%]", battery, charging, watchBatteryAlert);
 
         // Check if low battery
         if (watchBatteryAlert > 0 && watchBatteryAlert > battery && !charging && !alreadyBatteryNotified) {
-            Logger.debug("low watch battery...");
+            Logger.debug("[Battery Alert] low watch battery...");
             // Send notification
             sendNotification(context, ALERT_LOW, watchBatteryAlert);
             Prefs.putBoolean(Constants.PREF_BATTERY_WATCH_ALREADY_ALERTED, true);
@@ -173,7 +215,7 @@ public class BatteryStatusReceiver extends BroadcastReceiver {
             Prefs.putBoolean(Constants.PREF_BATTERY_WATCH_ALREADY_ALERTED, false);
 
         if (batteryFullAlert && battery > 99 && charging && !alreadyChargingNotified) {
-            Logger.debug("watch fully charged...");
+            Logger.debug("[Battery Alert] watch fully charged...");
             // Fully charged notification
             sendNotification(context, ALERT_FULL, 100);
             Prefs.putBoolean(Constants.PREF_BATTERY_WATCH_CHARGED, true);

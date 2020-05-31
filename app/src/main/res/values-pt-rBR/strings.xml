@@ -158,6 +158,7 @@
     <string name="watch_is_connected">Conectado</string>
     <string name="watch_disconnected">Desconectado</string>
     <string name="watch_connecting">Conectando…</string>
+    <string name="watch_connecting_no_service">Connecting without service…</string>
     <string name="notifications_screen_timeout">Tempo de tela acesa</string>
     <string name="pref_notifications_inverted_theme">Tema Claro</string>
     <string name="pref_notifications_inverted_theme_summary">Habilitar tema claro.</string>
@@ -317,7 +318,7 @@
     <string name="pref_enable_delete_button_on">Botão excluir aparece abaixo da notificação conteúdo</string>
     <string name="pref_enable_delete_button_off">Botão deletar será na quarta tela quando fizer deslizar para a esquerda na notificação</string>
     <string name="activity_packageoptions_unmute">Reativar o som</string>
-    <string name="activity_packageoptions_muted_until">Silenciado até:</string>
+    <string name="activity_packageoptions_muted_until">App silenciado até:</string>
     <string name="main_options">Opções principais</string>
     <string name="watchface_calendar_source">Fonte da Agenda</string>
     <string name="test">Teste</string>
@@ -375,7 +376,7 @@
     <string name="product_model">Modelo do produto</string>
     <string name="product_name">Nome do produto</string>
     <string name="serial_number">Nº de Série</string>
-    <string name="build_id">ID da Build</string>
+    <string name="build_id">Firmware</string>
     <string name="build_model">Modelo Huami</string>
     <string name="build_description">Descrição da compilação</string>
     <string name="rename_folder">Renomear Pasta</string>
@@ -407,9 +408,9 @@
     <string name="batter_data_request">Requisitar dados da bateria</string>
     <string name="batter_data_export">Exportar dados da bateria</string>
     <string name="app_options">Opções do App</string>
-    <string name="notification_options">Opções de Notificação</string>
-    <string name="notification_options_description">Não mostrar notificações contendo os seguintes textos (um por linha):</string>
-    <string name="whitelist_notification_options_description">Show only notifications containing the following texts (one per line):</string>
+    <string name="notification_options">Opções de notificação</string>
+    <string name="notification_options_description">Não mostrar notificações que contenham os seguintes textos:\n(escreva um por linha)</string>
+    <string name="whitelist_notification_options_description">Mostrar apenas notificações que contenham os seguintes textos:\n(escreva um por linha)</string>
     <string name="and">e</string>
     <plurals name="day">
         <item quantity="one">dia</item>
@@ -429,7 +430,8 @@
     <string name="no_widgets_found">Nenhum widget encontrado</string>
     <string name="intro_description_grant_access">Grant Access</string>
     <string name="intro_description_get_started">Get Started</string>
-    <string name="filter_level">Nível do filtro</string>
+    <string name="filter_mode">Modo de filtro:</string>
+    <string name="filter_level">Nível de filtro:</string>
     <!-- Strings used for widget list start -->
     <string name="widget_step">Resumo diário (passos)</string>
     <string name="widget_countdown">Contagem regressiva</string>

@@ -38,6 +38,7 @@ import amazmod.com.transport.Constants;
 import amazmod.com.transport.data.NotificationData;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
+import static com.edotassi.amazmod.util.Screen.isStratos3;
 
 public class NotificationFactory {
 
@@ -73,14 +74,14 @@ public class NotificationFactory {
             text = bigText.toString();
         }
 
-        //Use EXTRA_TEXT_LINES instead, if it exists
+        // Use EXTRA_TEXT_LINES instead, if it exists
         CharSequence[] lines = bundle.getCharSequenceArray(Notification.EXTRA_TEXT_LINES);
         if ((lines != null) && (lines.length > 0)) {
             text += "\n*Extra lines:\n" + lines[Math.min(lines.length - 1, 0)].toString();
             Logger.debug("NotificationFactory EXTRA_TEXT_LINES exists");
         }
 
-        //Maybe use android.bigText instead?
+        // Maybe use android.bigText instead?
         if (bundle.getCharSequence(Notification.EXTRA_BIG_TEXT) != null) {
             try {
                 text = bundle.getCharSequence(Notification.EXTRA_BIG_TEXT).toString();
@@ -97,7 +98,7 @@ public class NotificationFactory {
                 PackageManager manager = context.getPackageManager();
                 Resources resources = manager.getResourcesForApplication(notificationPackage);
                 Drawable icon;
-                if (Prefs.getBoolean(Constants.PREF_NOTIFICATIONS_COLORED_ICON, Constants.PREF_NOTIFICATIONS_COLORED_ICON_DEFAULT)) {
+                if (Prefs.getBoolean(Constants.PREF_NOTIFICATIONS_COLORED_ICON, Constants.PREF_NOTIFICATIONS_COLORED_ICON_DEFAULT) && !isStratos3() ) { // todo remove !isStratos3() when connection is fixed
                     Logger.debug("Use colored icon");
                     icon = manager.getApplicationIcon(notificationPackage);
                 } else {
@@ -126,7 +127,6 @@ public class NotificationFactory {
                 Logger.error("Failed to get bitmap from {} notification", notificationPackage);
             }
             extractImagesFromNotification(context, statusBarNotification, notificationData);
-
         } else {
             addMapBitmap(context, statusBarNotification, notificationData);
         }

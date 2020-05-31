@@ -15,6 +15,8 @@
     <string name="empty">Trống</string>
     <string name="clear_data">Xóa dữ liệu</string>
     <string name="uninstall">Gỡ cài đặt</string>
+    <string name="quick_launch">Khởi động nhanh</string>
+    <string name="quick_launch_description">Ứng dụng có thể được khởi chạy từ màn hình watchface bằng nút dưới cùng (nhấn và giữ)!</string>
     <string name="clear_app_data">Xoá dữ liệu ứng dụng</string>
     <string name="install_app">Cài đặt ứng dụng</string>
     <string name="delete">Xóa</string>
@@ -165,4 +167,9 @@
     <string name="activity_menu_input_method">Thay đổi phương thức nhập</string>
     <string name="activity_menu_device_info">Thông tin Thiết bị</string>
     <string name="activity_menu_hourly_chime">Chuông hàng giờ</string>
+    <string name="uvindex_weakest">Yếu nhất</string>
+    <string name="uvindex_weak">Yếu</string>
+    <string name="uvindex_moderate">Vừa phải</string>
+    <string name="uvindex_strong">Mạnh</string>
+    <string name="uvindex_verystrong">Rất mạnh</string>
 </resources>

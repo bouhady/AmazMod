@@ -15,6 +15,8 @@
     <string name="empty">Vuoto</string>
     <string name="clear_data">Cancella Dati</string>
     <string name="uninstall">Disinstalla</string>
+    <string name="quick_launch">Avvio rapido</string>
+    <string name="quick_launch_description">L\'app può essere avviata dalla schermata watchface usando il pulsante inferiore (pressione prolungata)!</string>
     <string name="clear_app_data">Cancella Dati App</string>
     <string name="install_app">Installa App</string>
     <string name="delete">Cancella</string>
@@ -165,4 +167,9 @@
     <string name="activity_menu_input_method">Cambia Metodo Immissione</string>
     <string name="activity_menu_device_info">Info Dispositivo</string>
     <string name="activity_menu_hourly_chime">Segnale Orario</string>
+    <string name="uvindex_weakest">Molto debole</string>
+    <string name="uvindex_weak">Debole</string>
+    <string name="uvindex_moderate">Moderato</string>
+    <string name="uvindex_strong">Forte</string>
+    <string name="uvindex_verystrong">Molto forte</string>
 </resources>

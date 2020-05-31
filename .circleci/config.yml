@@ -3,19 +3,21 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/android:api-28-alpha
+      - image: circleci/android:api-29
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
       - checkout
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-      #      - run:
-      #         name: Chmod permissions #if permission for Gradlew Dependencies fail, use this.
-      #         command: sudo chmod +x ./gradlew
       - run:
           name: Accept Licences
           command: (echo y; echo y; echo y; echo y; echo y; echo y) | sdkmanager --licenses
+      - run:
+          name: Extract Build Artifacts
+          command: |
+            openssl enc -aes-256-cbc -pbkdf2 -d -in .circleci/circle-artifact.bin -out circle-artifact.tar -iv $AMAZMOD_CRYPT_IV -K $AMAZMOD_CRYPT_PASS
+            tar xf circle-artifact.tar
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
@@ -27,17 +29,17 @@ jobs:
           name: Run Tests and Lints
           command: ./gradlew lint test
       - run:
-          name: Build debug APK for Phone App
-          command: ./gradlew :app:assembleDebug
+          name: Build Release APK for Phone App
+          command: ./gradlew :app:assembleRelease
       - run:
           name: Build debug APK for Watch Service
-          command: ./gradlew :service:assembleDebug
+          command: ./gradlew :service:assembleRelease
       - run:
           name: Move APKs to temp folder
           command: |
             mkdir -p persist/apks
-            mv app/build/outputs/apk/debug/*.apk persist/apks/
-            mv service/build/outputs/apk/debug/*.apk persist/apks/
+            mv app/build/outputs/apk/release/*.apk persist/apks/
+            mv service/build/outputs/apk/release/*.apk persist/apks/
       - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
           path: app/build/reports
           destination: reports
@@ -50,7 +52,7 @@ jobs:
   
   github-release:
     docker:
-      - image: cibuilds/github:0.12.1
+      - image: cibuilds/github:0.13.0
     steps:
       - attach_workspace:
           at: ./apks

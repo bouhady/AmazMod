@@ -63,20 +63,27 @@ public class Setup {
                 .enqueue(new Callback() {
                     @Override
                     public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                        Logger.debug("checkServiceUpdate: failed to check for updates");
+                        Logger.error(e, "checkServiceUpdate: failed to check for updates");
                         updater.updateCheckFailed();
                     }
 
                     @Override
-                    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    public void onResponse(@NonNull Call call, @NonNull Response response) {
                         try {
-                            String json = response.body().string();
+                            String json;
+                            if (response.body() != null) {
+                                json = response.body().string();
+                            } else {
+                                Logger.error("checkServiceUpdate: failed to check for updates: response.body() is null");
+                                updater.updateCheckFailed();
+                                return;
+                            }
                             Properties data = new Gson().fromJson(json, Properties.class);
-                            int betaVersionCode = Integer.valueOf(data.getProperty("betaVersionCode"));
-                            int latestVersionValue = Integer.valueOf(data.getProperty("release"));
+                            int betaVersionCode = Integer.parseInt(data.getProperty("betaVersionCode"));
+                            int latestVersionValue = Integer.parseInt(data.getProperty("release"));
                             Logger.info("checkServiceUpdate: checking if application VERSION_CODE (" + BuildConfig.VERSION_CODE + ") is greater or equals " + betaVersionCode);
                             if (BuildConfig.VERSION_CODE >= betaVersionCode){
-                                latestVersionValue = Integer.valueOf(data.getProperty("beta"));
+                                latestVersionValue = Integer.parseInt(data.getProperty("beta"));
                                 Logger.info("checkServiceUpdate: will use BETA service available " +  latestVersionValue);
                             }else{
                                 Logger.info("checkServiceUpdate: will use RELEASE service available " +  latestVersionValue);

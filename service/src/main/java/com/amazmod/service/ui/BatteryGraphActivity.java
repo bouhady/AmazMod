@@ -351,23 +351,28 @@ public class BatteryGraphActivity extends ListActivity {
                 float y2 = yValues.get(size - 1).getY();
 
                 float target_time;
-                float remaininf_now_diff;
+                float remaining_now_diff;
                 if (charging) {
                     // Future time that battery will be 100%
                     target_time = x2 + (x2 - x1) / (y2 - y1) * (100 - y2);
 
                     textDate = getString(R.string.charged_in)+": ";
-                    remaininf_now_diff = (target_time - System.currentTimeMillis()) / (1000 * 60);
-                    textDate += ((int) remaininf_now_diff / 60) + "h:" + ((int) remaininf_now_diff % 60) + "m";
+                    remaining_now_diff = (target_time - System.currentTimeMillis()) / (1000 * 60);
+                    if(((int) remaining_now_diff / 60) == 0)
+                        textDate += ((int) remaining_now_diff % 60) + "m";
+                    else
+                        textDate += ((int) remaining_now_diff / 60) + "h:" + ((int) remaining_now_diff % 60) + "m";
 
                 } else {
                     // Future time that battery will be 0%
                     target_time = x2 + (x2 - x1) / (y1 - y2) * y2;
 
                     textDate = getString(R.string.remaining)+": ";
-                    remaininf_now_diff = (target_time - System.currentTimeMillis()) / (1000 * 60 * 60);
-                    textDate += ((int) remaininf_now_diff / 24) + "d:" + ((int) remaininf_now_diff % 24) + "h";
-
+                    remaining_now_diff = (target_time - System.currentTimeMillis()) / (1000 * 60 * 60);
+                    if(((int) remaining_now_diff / 24) == 0)
+                        textDate += ((int) remaining_now_diff % 24) + "h";
+                    else
+                        textDate += ((int) remaining_now_diff / 24) + "d:" + ((int) remaining_now_diff % 24) + "h";
                 }
             }
         }
@@ -461,9 +466,9 @@ public class BatteryGraphActivity extends ListActivity {
                 long diff = unit.convert(millisRest, TimeUnit.MILLISECONDS);
                 long diffInMilliesForUnit = unit.toMillis(diff);
                 millisRest = millisRest - diffInMilliesForUnit;
-                if (unit.equals(TimeUnit.DAYS)) {
+                if (unit.equals(TimeUnit.DAYS) && diff != 0) {
                     dateDiff.append(diff).append("d : ");
-                } else if (unit.equals(TimeUnit.HOURS)) {
+                } else if (unit.equals(TimeUnit.HOURS) && diff != 0) {
                     dateDiff.append(diff).append("h : ");
                 } else if (unit.equals(TimeUnit.MINUTES)) {
                     dateDiff.append(diff).append("min");
